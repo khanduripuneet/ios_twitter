@@ -8,6 +8,8 @@
 
 #import "TimelineVC.h"
 #import "TweetCell.h"
+#import "TweetViewController.h"
+#import "ComposeViewController.h"
 
 @interface TimelineVC ()
 
@@ -36,6 +38,8 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onSignOutButton)];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Compose" style:UIBarButtonItemStylePlain target:self action:@selector(onComposeButton)];
 
     UINib *tweetNib = [UINib nibWithNibName:@"TweetCell" bundle:Nil];
     [self.tableView registerNib:tweetNib forCellReuseIdentifier:@"TweetCellId"];
@@ -125,7 +129,16 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    TweetViewController * tweetDetailVC = [[TweetViewController alloc] initWithNibName:@"TweetViewController" bundle:nil];
+    
+    
+    
+    [tweetDetailVC setTweet:self.tweets[indexPath.row]];
+    
+    
+    
+    [[self navigationController] pushViewController:tweetDetailVC animated:YES];
 }
 
 /*
@@ -144,6 +157,14 @@
 
 - (void)onSignOutButton {
     [User setCurrentUser:nil];
+}
+
+- (void)onComposeButton {
+    ComposeViewController * composeVC = [[ComposeViewController alloc] initWithNibName:@"ComposeViewController" bundle:nil];
+    
+    
+    
+    [[self navigationController] pushViewController:composeVC animated:YES];
 }
 
 - (void)reload {

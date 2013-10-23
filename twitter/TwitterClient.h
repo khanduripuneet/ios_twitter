@@ -7,6 +7,7 @@
 //
 
 #import "AFOAuth1Client.h"
+#import "Tweet.h"
 
 @interface TwitterClient : AFOAuth1Client
 
@@ -21,5 +22,15 @@
 // Statuses API
 
 - (void)homeTimelineWithCount:(int)count sinceId:(int)sinceId maxId:(int)maxId success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+-(void) retweetWithTweet:(Tweet *) tweet success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+
+
+-(void) favWithTweet:(Tweet *) tweet success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+-(void) composeWithText:(NSString *) message success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+-(void) replyToTweet:(Tweet*) tweet withText:(NSString *) message success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

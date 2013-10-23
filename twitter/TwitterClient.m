@@ -79,4 +79,46 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+-(void) retweetWithTweet:(Tweet *) tweet success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    
+    
+    [self postPath:[NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", tweet.tweetId] parameters:nil success:success failure:failure];
+    
+}
+
+
+
+-(void) favWithTweet:(Tweet *) tweet success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    
+    
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"id": tweet.tweetId}];
+    
+    
+    
+    [self postPath:@"1.1/favorites/create.json" parameters:params success:success failure:failure];
+    
+}
+
+
+-(void) composeWithText:(NSString *) message success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"status": message}];
+    
+    
+    
+    [self postPath:@"1.1/statuses/update.json" parameters:params success:success failure:failure];
+
+}
+
+-(void) replyToTweet:(Tweet*) tweet withText:(NSString *) message success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSMutableDictionary *params = [NSMutableDictionary
+                                   dictionaryWithDictionary:@{@"status": message,
+                                                            @"in_reply_to_status_id":tweet.tweetId}];
+    
+    
+    
+    [self postPath:@"1.1/statuses/update.json" parameters:params success:success failure:failure];
+    
+}
 @end

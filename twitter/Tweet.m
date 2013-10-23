@@ -10,6 +10,9 @@
 
 @implementation Tweet
 
+- (NSString *)tweetId {
+    return [self.data valueOrNilForKeyPath:@"id_str"];
+}
 - (NSString *)text {
     return [self.data valueOrNilForKeyPath:@"text"];
 }
@@ -33,5 +36,7 @@
     }
     return tweets;
 }
-
+- (NSString *)screenName {
+    return [self.data valueOrNilForKeyPath:@"user.screen_name"];
+}
 @end
